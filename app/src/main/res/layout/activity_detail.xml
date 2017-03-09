@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    tools:context="my.mypopularmovies.DetailActivity">
+
+    <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="250dp"
+        android:id="@+id/tv_movie_poster"
+        android:adjustViewBounds="true"
+        android:scaleType="fitXY"
+        tools:src="@mipmap/ic_launcher"/>
+
+  <RelativeLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:paddingLeft="10dp"
+      android:paddingRight="10dp"
+      >
+
+      <TextView
+          android:id="@+id/tv_movie_title"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:textSize="25dp"
+          android:paddingBottom="20dp"
+          android:gravity="center_horizontal"
+          tools:text="Her"/>
+
+      <TextView
+          android:id="@+id/tv_movie_rating"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignParentLeft="true"
+          android:layout_below="@id/tv_movie_title"
+          tools:text="7/10"/>
+
+      <TextView
+          android:id="@+id/tv_movie_date"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_below="@id/tv_movie_title"
+          android:layout_alignParentRight="true"
+          tools:text="23/12/2015"/>
+
+
+      <TextView
+          android:id="@+id/tv_movie_synopsis"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:paddingTop="20dp"
+          android:textAlignment="textStart"
+          android:gravity="start"
+          android:layout_below="@id/tv_movie_rating"
+          tools:text="@string/placeholder"/>
+
+  </RelativeLayout>
+
+
+</LinearLayout>
