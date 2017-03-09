@@ -9,12 +9,13 @@
     tools:context="my.mypopularmovies.DetailActivity">
 
     <ImageView
-        android:layout_width="fill_parent"
-        android:layout_height="250dp"
         android:id="@+id/tv_movie_poster"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:adjustViewBounds="true"
-        android:scaleType="fitXY"
-        tools:src="@mipmap/ic_launcher"/>
+        android:maxHeight="310dp"
+        tools:src="@drawable/poster_placeholder"/>
 
   <RelativeLayout
       android:layout_width="match_parent"
@@ -28,6 +29,7 @@
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:textSize="25dp"
+          android:paddingTop="10dp"
           android:paddingBottom="20dp"
           android:gravity="center_horizontal"
           tools:text="Her"/>
