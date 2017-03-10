@@ -55,7 +55,7 @@
           android:id="@+id/tv_movie_synopsis"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:paddingTop="20dp"
+          android:paddingTop="20sp"
           android:textAlignment="textStart"
           android:gravity="start"
           android:layout_below="@id/tv_movie_rating"
