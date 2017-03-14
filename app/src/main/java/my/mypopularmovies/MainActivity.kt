@@ -20,7 +20,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         // RecyclerView Items will have the same size
-        rc_movies_list.setHasFixedSize(false)
+        rc_movies_list.setHasFixedSize(true)
 
         // Set adapter
         rc_movies_list.adapter = moviesListAdapter

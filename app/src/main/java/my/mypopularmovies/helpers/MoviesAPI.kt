@@ -11,7 +11,7 @@ import org.json.JSONObject
 
 
 /**
- * Created by flying_potato on 10/03/2017.
+ *  Helpers to deal with Movies API
  */
 class MoviesAPI {
     companion object{
@@ -33,7 +33,7 @@ class MoviesAPI {
             return "$BASE_URL/movie/top_rated"
         }
 
-        fun imageUrl(width: String = "w185", img: String ): String{
+        fun getImageUrl(width: String = "w185", img: String ): String{
             return "$IMAGE_BASE_URL/$width$img"
 
         }

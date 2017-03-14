@@ -56,16 +56,15 @@ class MoviesListAdapter() : RecyclerView.Adapter<MoviesListAdapter.MoviesListVie
 
            // Get movie json object
            val movie: JSONObject = moviesList.getJSONObject(position)
-           Log.d(TAG, "Movie: \n $movie")
+           Log.d(TAG, "Movie: ${movie.get("original_title")}")
 
-           // set thumnail of movie
            try {
 
                // Get url for image thumbnail
-               val thumbnail_url: String = MoviesAPI.imageUrl(img=movie.getString("poster_path"))
+               val thumbnail_url: String = MoviesAPI.getImageUrl(img=movie.getString("poster_path"))
                Log.d(TAG, "Thumbnail url: $thumbnail_url")
 
-               // set thumbnail
+               // set thumnail of movie
                Picasso.with(holder.context).load(thumbnail_url).into(holder.movieThumbnailImageView)
 
 
