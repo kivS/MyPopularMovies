@@ -1,11 +1,15 @@
 package my.mypopularmovies
 
+import android.content.Context
 import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.movie_list_item.view.*
+import my.mypopularmovies.helpers.MoviesAPI
 import org.json.JSONArray
 import org.json.JSONObject
 
@@ -23,8 +27,10 @@ class MoviesListAdapter() : RecyclerView.Adapter<MoviesListAdapter.MoviesListVie
      */
     inner class MoviesListViewHolder(layout_view: View) : RecyclerView.ViewHolder(layout_view){
 
+        val context: Context = layout_view.context
+
         // Define the views will interact with
-        val movieThumbnailImageView: View = layout_view.iv_movie_thumbnail
+        val movieThumbnailImageView: ImageView = layout_view.iv_movie_thumbnail
     }
 
 
@@ -53,7 +59,20 @@ class MoviesListAdapter() : RecyclerView.Adapter<MoviesListAdapter.MoviesListVie
            Log.d(TAG, "Movie: \n $movie")
 
            // set thumnail of movie
-           holder.movieThumbnailImageView.setBackgroundResource(R.color.background_material_dark)
+           try {
+
+               // Get url for image thumbnail
+               val thumbnail_url: String = MoviesAPI.imageUrl(img=movie.getString("poster_path"))
+               Log.d(TAG, "Thumbnail url: $thumbnail_url")
+
+               // set thumbnail
+               Picasso.with(holder.context).load(thumbnail_url).into(holder.movieThumbnailImageView)
+
+
+           }catch (e: Exception){
+               e.printStackTrace()
+           }
+
        }
     }
 

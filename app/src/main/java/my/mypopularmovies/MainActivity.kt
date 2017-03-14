@@ -3,6 +3,7 @@ package my.mypopularmovies
 import android.os.AsyncTask
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import kotlinx.android.synthetic.main.activity_main.*
 import my.mypopularmovies.helpers.MoviesAPI
 import org.json.JSONArray
@@ -19,7 +20,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         // RecyclerView Items will have the same size
-        rc_movies_list.setHasFixedSize(true)
+        rc_movies_list.setHasFixedSize(false)
 
         // Set adapter
         rc_movies_list.adapter = moviesListAdapter
@@ -63,6 +64,8 @@ class MainActivity : AppCompatActivity() {
         }
 
         override fun onPostExecute(result: JSONArray) {
+
+            Log.d(TAG, "Got ${result.length()} movies")
 
            // Set new data to adapter
             moviesListAdapter.setMovieData(result)

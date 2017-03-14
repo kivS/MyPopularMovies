@@ -34,7 +34,7 @@ class MoviesAPI {
         }
 
         fun imageUrl(width: String = "w185", img: String ): String{
-            return "$IMAGE_BASE_URL/$width/$img"
+            return "$IMAGE_BASE_URL/$width$img"
 
         }
 
