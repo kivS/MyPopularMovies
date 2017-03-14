@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:orientation="vertical"
     android:layout_height="match_parent"
-    tools:context="my.mypopularmovies.DetailActivity">
+    tools:context=".DetailActivity">
 
     <ImageView
         android:id="@+id/tv_movie_poster"
