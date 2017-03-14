@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import my.mypopularmovies.helpers.MoviesAPI
+import org.json.JSONArray
+import org.json.JSONObject
 
 class MainActivity : AppCompatActivity() {
 
@@ -21,12 +23,15 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    inner class FetchMoviesTask() : AsyncTask<String, Void, String>(){
+    /**
+     *  Background task to get and set data to recyclerView
+     */
+    inner class FetchMoviesTask() : AsyncTask<String, Void, JSONArray>(){
         override fun onPreExecute() {
             super.onPreExecute()
         }
 
-        override fun doInBackground(vararg params: String): String? {
+        override fun doInBackground(vararg params: String): JSONArray? {
             if(params.size == 0) return null
 
             // Get url to be fetched
@@ -36,7 +41,9 @@ class MainActivity : AppCompatActivity() {
 
                 val queryResponse: String = MoviesAPI.getMovies(this@MainActivity, movieUrl)
 
-                return queryResponse
+                val parsedResponse = MoviesAPI.parseStringToJson(queryResponse)
+
+                return parsedResponse
 
 
             }catch (e: Exception){
@@ -45,8 +52,11 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        override fun onPostExecute(result: String?) {
-            Log.d(TAG, "Result: \n $result")
+        override fun onPostExecute(result: JSONArray) {
+
+            val tst: JSONObject = result.getJSONObject(0)
+
+            Log.d(TAG, "Result: \n ${tst.get("poster_path")}")
         }
     }
 }

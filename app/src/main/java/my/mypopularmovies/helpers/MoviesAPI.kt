@@ -6,6 +6,7 @@ import my.mypopularmovies.R
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.Response
+import org.json.JSONArray
 import org.json.JSONObject
 
 
@@ -38,11 +39,11 @@ class MoviesAPI {
         }
 
 
-        fun parseStringToJson(stringObj: String): Any{
+        fun parseStringToJson(stringObj: String): JSONArray{
 
             var parsedObj: JSONObject = JSONObject(stringObj)
 
-            return parsedObj
+            return parsedObj.getJSONArray("results")
         }
 
 
