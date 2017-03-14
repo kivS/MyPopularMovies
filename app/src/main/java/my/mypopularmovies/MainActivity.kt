@@ -3,18 +3,28 @@ package my.mypopularmovies
 import android.os.AsyncTask
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
+import kotlinx.android.synthetic.main.activity_main.*
 import my.mypopularmovies.helpers.MoviesAPI
 import org.json.JSONArray
-import org.json.JSONObject
 
 class MainActivity : AppCompatActivity() {
 
     val TAG = this.javaClass.simpleName
 
+    val moviesListAdapter: MoviesListAdapter = MoviesListAdapter()
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        // RecyclerView Items will have the same size
+        rc_movies_list.setHasFixedSize(true)
+
+        // Set adapter
+        rc_movies_list.adapter = moviesListAdapter
+
+
 
         // Load data
         val moviesToFetch: String = MoviesAPI.moviesNowPlayingUrl()
@@ -54,9 +64,9 @@ class MainActivity : AppCompatActivity() {
 
         override fun onPostExecute(result: JSONArray) {
 
-            val tst: JSONObject = result.getJSONObject(0)
+           // Set new data to adapter
+            moviesListAdapter.setMovieData(result)
 
-            Log.d(TAG, "Result: \n ${tst.get("poster_path")}")
         }
     }
 }
