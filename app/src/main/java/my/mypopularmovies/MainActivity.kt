@@ -1,6 +1,7 @@
 package my.mypopularmovies
 
 import android.content.Context
+import android.content.Intent
 import android.net.ConnectivityManager
 import android.net.NetworkInfo
 import android.os.AsyncTask
@@ -98,6 +99,16 @@ class MainActivity : AppCompatActivity(), MoviesListAdapter.AdapterOnMovieClickH
      */
     override fun onMovieClick(movieData: JSONObject) {
         Log.d(TAG, "Movie clicked: ${movieData.get("original_title")}")
+
+        // build intent for movie detail
+        val getMovieDetailIntent: Intent = Intent(this, DetailActivity::class.java)
+
+        // add payload to intent
+        getMovieDetailIntent.putExtra("movie", movieData.toString())
+
+        // Start detail activity
+        startActivity(getMovieDetailIntent)
+
     }
 
 
