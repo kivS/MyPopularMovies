@@ -16,21 +16,45 @@ import org.json.JSONObject
 /**
  * RecyclerView Adapter for movies list
  */
-class MoviesListAdapter() : RecyclerView.Adapter<MoviesListAdapter.MoviesListViewHolder>() {
+class MoviesListAdapter(val movieClickCallback: AdapterOnMovieClickHandler) : RecyclerView.Adapter<MoviesListAdapter.MoviesListViewHolder>() {
 
     val TAG = javaClass.simpleName
 
     var moviesList: JSONArray = JSONArray()
 
+
+    /***
+     *  Callback for movie click handler
+     */
+    interface AdapterOnMovieClickHandler{
+        fun onMovieClick(movieData: JSONObject)
+    }
+
+
+
     /**
      *  View holder for movies list
      */
-    inner class MoviesListViewHolder(layout_view: View) : RecyclerView.ViewHolder(layout_view){
+    inner class MoviesListViewHolder(layout_view: View) : RecyclerView.ViewHolder(layout_view), View.OnClickListener{
+        init {
+            // add click listener for view
+            layout_view.setOnClickListener(this)
+        }
 
         val context: Context = layout_view.context
 
-        // Define the views will interact with
+        // Define the views that we'll interact with
         val movieThumbnailImageView: ImageView = layout_view.iv_movie_thumbnail
+
+
+
+        override fun onClick(v: View?) {
+            // get clicked movie data object
+            val movie: JSONObject = moviesList.getJSONObject(adapterPosition)
+
+            // return data to callback
+            movieClickCallback.onMovieClick(movie)
+        }
     }
 
 

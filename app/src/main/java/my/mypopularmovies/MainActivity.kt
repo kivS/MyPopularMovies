@@ -13,12 +13,13 @@ import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
 import my.mypopularmovies.helpers.MoviesAPI
 import org.json.JSONArray
+import org.json.JSONObject
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), MoviesListAdapter.AdapterOnMovieClickHandler {
 
     val TAG = this.javaClass.simpleName
 
-    val moviesListAdapter: MoviesListAdapter = MoviesListAdapter()
+    val moviesListAdapter: MoviesListAdapter = MoviesListAdapter(this)
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -71,13 +72,13 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        override fun onPostExecute(result: JSONArray) {
-
-            Log.d(TAG, "Got ${result.length()} movies")
+        override fun onPostExecute(result: JSONArray?) {
 
             pb_loading.visibility = View.INVISIBLE
 
-            if(result.length() > 0){
+            if(result != null && result.length() > 0){
+
+                Log.d(TAG, "Got ${result.length()} movies")
 
                 rc_movies_list.visibility = View.VISIBLE
 
@@ -86,8 +87,17 @@ class MainActivity : AppCompatActivity() {
 
             }else{
                 // Show error
+               showError(R.string.error_no_result)
             }
         }
+    }
+
+
+    /**
+     *  Handle when movie is clicked
+     */
+    override fun onMovieClick(movieData: JSONObject) {
+        Log.d(TAG, "Movie clicked: ${movieData.get("original_title")}")
     }
 
 
