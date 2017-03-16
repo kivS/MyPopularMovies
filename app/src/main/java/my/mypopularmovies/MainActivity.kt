@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.Gravity
+import android.view.Menu
 import android.view.View
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
@@ -109,6 +110,15 @@ class MainActivity : AppCompatActivity(), MoviesListAdapter.AdapterOnMovieClickH
         // Start detail activity
         startActivity(getMovieDetailIntent)
 
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+
+        // inflate menu
+
+        menuInflater.inflate(R.menu.main_menu, menu)
+
+        return super.onCreateOptionsMenu(menu)
     }
 
 
