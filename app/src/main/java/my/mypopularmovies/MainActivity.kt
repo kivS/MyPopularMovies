@@ -1,9 +1,15 @@
 package my.mypopularmovies
 
+import android.content.Context
+import android.net.ConnectivityManager
+import android.net.NetworkInfo
 import android.os.AsyncTask
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
+import android.view.Gravity
+import android.view.View
+import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
 import my.mypopularmovies.helpers.MoviesAPI
 import org.json.JSONArray
@@ -25,12 +31,9 @@ class MainActivity : AppCompatActivity() {
         // Set adapter
         rc_movies_list.adapter = moviesListAdapter
 
+        // Load Movies
+        loadMovies()
 
-
-        // Load data
-        val moviesToFetch: String = MoviesAPI.moviesNowPlayingUrl()
-
-        FetchMoviesTask().execute(moviesToFetch)
 
     }
 
@@ -40,6 +43,11 @@ class MainActivity : AppCompatActivity() {
     inner class FetchMoviesTask() : AsyncTask<String, Void, JSONArray>(){
         override fun onPreExecute() {
             super.onPreExecute()
+
+            // Handle user UI
+            rc_movies_list.visibility = View.INVISIBLE
+            pb_loading.visibility = View.VISIBLE
+
         }
 
         override fun doInBackground(vararg params: String): JSONArray? {
@@ -67,11 +75,61 @@ class MainActivity : AppCompatActivity() {
 
             Log.d(TAG, "Got ${result.length()} movies")
 
-           // Set new data to adapter
-            moviesListAdapter.setMovieData(result)
+            pb_loading.visibility = View.INVISIBLE
 
+            if(result.length() > 0){
+
+                rc_movies_list.visibility = View.VISIBLE
+
+                // Set new data to adapter
+                moviesListAdapter.setMovieData(result)
+
+            }else{
+                // Show error
+            }
         }
     }
+
+
+    /**
+     *  Displays error to the user according to string resource supplemented
+     */
+    fun showError(msgId: Int){
+
+       val errorToast = Toast.makeText(this, getString(msgId), Toast.LENGTH_LONG)
+        errorToast.setGravity(Gravity.CENTER, 0,0)
+        errorToast.show()
+    }
+
+    /**
+     *  Check if internet connection is present
+     */
+    fun isOnline(): Boolean{
+
+        val cm: ConnectivityManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+
+        val netInfo: NetworkInfo? = cm.activeNetworkInfo
+
+        return netInfo != null && netInfo.isConnected
+
+    }
+
+    /**
+     *  Load movies list
+     */
+    fun loadMovies(){
+        // check if connection is up
+        if(isOnline()){
+            val moviesToFetch: String = MoviesAPI.moviesNowPlayingUrl()
+            FetchMoviesTask().execute(moviesToFetch)
+
+        }else{
+            showError(R.string.error_no_net)
+        }
+
+
+    }
+
 }
 
 
