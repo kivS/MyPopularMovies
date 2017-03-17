@@ -24,6 +24,8 @@ class MainActivity : AppCompatActivity(), MoviesListAdapter.AdapterOnMovieClickH
 
     val moviesListAdapter: MoviesListAdapter = MoviesListAdapter(this)
 
+    var moviesListData: JSONArray = JSONArray()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,10 +37,29 @@ class MainActivity : AppCompatActivity(), MoviesListAdapter.AdapterOnMovieClickH
         // Set adapter
         rc_movies_list.adapter = moviesListAdapter
 
-        // Load  now playing Movies
-        loadMovies(MoviesAPI.moviesNowPlayingUrl())
+        // Check wether state was previously saved
+        if(savedInstanceState != null){
+
+            // get movie list data
+            moviesListData = JSONArray(savedInstanceState.getString("MOVIES_LIST_DATA"))
+
+            // set recyclerView data
+            moviesListAdapter.setMovieData(moviesListData)
 
 
+
+        }else{
+            // Load  now playing Movies
+            loadMovies(MoviesAPI.moviesNowPlayingUrl())
+
+        }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle?) {
+        super.onSaveInstanceState(outState)
+
+        // Save movie list data
+        outState?.putString("MOVIES_LIST_DATA", moviesListData.toString())
     }
 
     /**
@@ -87,6 +108,9 @@ class MainActivity : AppCompatActivity(), MoviesListAdapter.AdapterOnMovieClickH
 
                 // Set new data to adapter
                 moviesListAdapter.setMovieData(result)
+
+                // persist data to activity
+                moviesListData = result
 
             }else{
                 // Show error
