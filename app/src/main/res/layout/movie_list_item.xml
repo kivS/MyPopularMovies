@@ -18,7 +18,7 @@
         android:maxHeight="260dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-
+        android:adjustViewBounds="true"
         tools:src="@drawable/poster_thumb_placeholder"
         />
 </LinearLayout>
