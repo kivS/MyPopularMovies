@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.Gravity
 import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
@@ -34,8 +35,8 @@ class MainActivity : AppCompatActivity(), MoviesListAdapter.AdapterOnMovieClickH
         // Set adapter
         rc_movies_list.adapter = moviesListAdapter
 
-        // Load Movies
-        loadMovies()
+        // Load  now playing Movies
+        loadMovies(MoviesAPI.moviesNowPlayingUrl())
 
 
     }
@@ -115,10 +116,24 @@ class MainActivity : AppCompatActivity(), MoviesListAdapter.AdapterOnMovieClickH
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
 
         // inflate menu
-
         menuInflater.inflate(R.menu.main_menu, menu)
+        return true
+    }
 
-        return super.onCreateOptionsMenu(menu)
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when(item?.itemId){
+            R.id.sort_popular ->{
+                Log.d(TAG, "clicked sort by popular")
+                loadMovies(MoviesAPI.moviesPopularUrl())
+                return true
+            }
+            R.id.sort_rating ->{
+                Log.d(TAG, "clicked sort by highest rating")
+                loadMovies(MoviesAPI.moviesTopRatedUrl())
+                return true
+            }
+            else -> return super.onOptionsItemSelected(item)
+        }
     }
 
 
@@ -148,11 +163,10 @@ class MainActivity : AppCompatActivity(), MoviesListAdapter.AdapterOnMovieClickH
     /**
      *  Load movies list
      */
-    fun loadMovies(){
+    fun loadMovies(categ: String){
         // check if connection is up
         if(isOnline()){
-            val moviesToFetch: String = MoviesAPI.moviesNowPlayingUrl()
-            FetchMoviesTask().execute(moviesToFetch)
+            FetchMoviesTask().execute(categ)
 
         }else{
             showError(R.string.error_no_net)
