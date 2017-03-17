@@ -39,7 +39,6 @@ class DetailActivity : AppCompatActivity() {
             }
         }
 
-
         // Set data to views
         try {
 

@@ -49,7 +49,7 @@ class MainActivity : AppCompatActivity(), MoviesListAdapter.AdapterOnMovieClickH
 
 
         }else{
-            // Load  now playing Movies
+            // Load 'now playing' Movies
             loadMovies(MoviesAPI.moviesNowPlayingUrl())
 
         }

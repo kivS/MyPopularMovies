@@ -38,7 +38,9 @@ class MoviesAPI {
 
         }
 
-
+        /**
+         *  Parse movies response to json array
+         */
         fun parseStringToJson(stringObj: String): JSONArray{
 
             var parsedObj: JSONObject = JSONObject(stringObj)
