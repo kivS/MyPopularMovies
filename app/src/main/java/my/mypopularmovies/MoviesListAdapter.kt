@@ -89,7 +89,7 @@ class MoviesListAdapter(val movieClickCallback: AdapterOnMovieClickHandler) : Re
                Log.d(TAG, "Thumbnail url: $thumbnail_url")
 
                // set thumnail of movie
-               Picasso.with(holder.context).load(thumbnail_url).into(holder.movieThumbnailImageView)
+               Picasso.with(holder.context).load(thumbnail_url).resize(185, 260).into(holder.movieThumbnailImageView)
 
 
            }catch (e: Exception){

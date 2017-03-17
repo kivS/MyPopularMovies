@@ -4,14 +4,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
-    android:layout_width="fill_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:paddingTop="10dp"
-    android:paddingBottom="5dp">
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="5dp"
+    android:paddingTop="2.5dp"
+    android:paddingBottom="2.5dp">
 
     <ImageView
         android:id="@+id/iv_movie_thumbnail"
         android:layout_width="185dp"
+        android:maxWidth="185dp"
+        android:maxHeight="260dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:adjustViewBounds="true"
